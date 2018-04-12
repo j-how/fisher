@@ -5,7 +5,6 @@ from app.models.book import db
 
 cache = Cache()
 
-
 def create_app():
     app = Flask(__name__)
     app.config.from_object('app.secure')

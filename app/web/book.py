@@ -1,6 +1,6 @@
 import json
 
-from flask import jsonify, request
+from flask import request, flash, render_template
 
 from app import cache
 from app.forms.book import SearchForm
@@ -22,7 +22,6 @@ def search():
     """
     form = SearchForm(request.args)
     books = BookCollection()
-
     if form.validate():
         p = form.p.data.strip()
         page = form.page.data
@@ -35,7 +34,15 @@ def search():
             yushu_book.search_by_keyword(p, page)
 
         books.fill(yushu_book, p)
-        return json.dumps(books, default=lambda o: o.__dict__)
+        # return json.dumps(books, default=lambda o: o.__dict__)
         # return jsonify(books)
     else:
-        return jsonify(form.errors)
+        flash('请重新输入关键字')
+        # return jsonify(form.errors)
+
+    return render_template('search_result.html', books=books)
+
+
+@web.route('/book/<isbn>/detail')
+def book_detail(isbn):
+    pass

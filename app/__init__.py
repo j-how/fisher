@@ -1,12 +1,14 @@
-from flask import Flask, current_app
+from flask import Flask
 from flask_cache import Cache
 
 from app.models.book import db
 
 cache = Cache()
 
+
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='frontend/static', static_url_path='/static',
+                template_folder='frontend\\templates')
     app.config.from_object('app.secure')
     app.config.from_object('app.setting')
 
